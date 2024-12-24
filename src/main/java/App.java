@@ -4,12 +4,13 @@ import java.util.Scanner;
 public class App {
     private int lastId = 0;
     private final ArrayList<WiseSaying> wiseSayingList = new ArrayList<>();
+
     Scanner scanner = new Scanner(System.in);
 
     public void run() {
 
         add("꿈을 지녀라. 그러면 어려운 현실을 이길 수 있다.", "월트 디즈니");
-        add("현재를 사랑하라","작자 미상");
+        add("현재를 사랑하라", "작자 미상");
 
         System.out.println("== 명언 앱 ==");
         while (true) {
@@ -24,19 +25,28 @@ public class App {
                 writeWiseSaying();
             } else if (command.equals("목록")) {
                 printWiseSayingList();
-            } else if (command.startsWith("삭제?id=")) {
-                deletWiseSaying();
+            } else if(command.startsWith("삭제?id=")) {
+                String strId = command.substring(6);
+                int id = Integer.parseInt(strId);
+                deleteWiseSaying(id);
+                System.out.println("%d번 명언이 삭제되었습니다.".formatted(id));
             }
         }
     }
-
-    private void deletWiseSaying() {
-        System.out.println("삭제");
+    // [a:0, b:1, c:2]
+    private void deleteWiseSaying(int targetId) {
+        for(WiseSaying wiseSaying : wiseSayingList) {
+            if(wiseSaying.getId() == targetId) {
+                wiseSayingList.remove(wiseSaying);
+                break;
+            }
+        }
     }
 
     private void printWiseSayingList() {
         System.out.println("번호 / 작가 / 명언");
         System.out.println("----------------------");
+
         for(WiseSaying wiseSaying : wiseSayingList.reversed()) {
             System.out.println("%d / %s / %s".formatted(wiseSaying.getId(), wiseSaying.getAuthor(), wiseSaying.getContent()));
         }
