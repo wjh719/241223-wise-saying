@@ -14,9 +14,8 @@ class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("== 명언 앱 ==");
         int lastNo = 0;
-        String[] contentList = new String[3];
-        String[] authorList = new String[3];
-        WiseSaying wiseSaying = new WiseSaying();
+        WiseSaying[] wiseSayingList = new WiseSaying[3];
+//        WiseSaying wiseSaying = new WiseSaying();
 
         while (true) {
             System.out.print("명령) ");
@@ -33,17 +32,24 @@ class App {
                 System.out.print("작가 : ");
                 String author = scanner.nextLine();
 
+                WiseSaying wiseSaying = new WiseSaying();
+
                 wiseSaying.id = ++lastNo;
                 wiseSaying.content = content;
                 wiseSaying.author = author;
+
+                wiseSayingList[lastNo - 1] = wiseSaying;
 
                 System.out.println("%d번 명언이 등록되었습니다.".formatted(lastNo));
 
             } else if (command.equals("목록")) {
                 System.out.println("번호 / 작가 / 명언");
                 System.out.println("----------------------");
-                System.out.println("%d / %s / %s".formatted(wiseSaying.id, wiseSaying.author, wiseSaying.content));
-//                for (int i = 0; i < 3; i++) {
+
+                for(int i = 0; i < lastNo; i++) {
+                    WiseSaying wiseSaying = wiseSayingList[i];
+                    System.out.println("%d / %s / %s".formatted(wiseSaying.id, wiseSaying.author, wiseSaying.content));
+                }//                for (int i = 0; i < 3; i++) {
 //                    System.out.println("%d / %s / %s".formatted(lastNo, authorList[i], contentList[i]));
 //                }
             }
